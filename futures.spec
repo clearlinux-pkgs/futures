@@ -4,7 +4,7 @@
 #
 Name     : futures
 Version  : 3.0.5
-Release  : 19
+Release  : 20
 URL      : https://pypi.python.org/packages/source/f/futures/futures-3.0.5.tar.gz
 Source0  : https://pypi.python.org/packages/source/f/futures/futures-3.0.5.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3.2
