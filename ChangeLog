@@ -1,3 +1,20 @@
+3.1.1
+=====
+
+- Backported sanity checks for the ``max_workers`` constructor argument for ThreadPoolExecutor and
+  ProcessPoolExecutor
+- Set the default value of ``max_workers`` in ThreadPoolExecutor to ``None``, as in upstream code
+  (computes the thread pool size based on the number of CPUs)
+- Added support for old-style exception objects
+- Switched to the PSF license
+
+
+3.1.0
+=====
+
+(Failed release)
+
+
 3.0.5
 =====
 

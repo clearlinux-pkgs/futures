@@ -1,5 +1,5 @@
 PKG_NAME := futures
-URL := https://pypi.python.org/packages/source/f/futures/futures-3.0.5.tar.gz
+URL := http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 
 
 include ../common/Makefile.common
