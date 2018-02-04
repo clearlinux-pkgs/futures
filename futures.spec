@@ -4,7 +4,7 @@
 #
 Name     : futures
 Version  : 3.1.1
-Release  : 30
+Release  : 31
 URL      : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Source0  : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3.2
@@ -34,7 +34,6 @@ legacypython components for the futures package.
 %package python
 Summary: python components for the futures package.
 Group: Default
-Requires: futures-legacypython
 Requires: futures-python3
 
 %description python
@@ -58,7 +57,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507153795
+export SOURCE_DATE_EPOCH=1517703802
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -66,9 +65,9 @@ python3 setup.py build -b py3
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-python test_futures.py
+python2 test_futures.py
 %install
-export SOURCE_DATE_EPOCH=1507153795
+export SOURCE_DATE_EPOCH=1517703802
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
