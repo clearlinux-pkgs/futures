@@ -4,22 +4,31 @@
 #
 Name     : futures
 Version  : 3.1.1
-Release  : 37
+Release  : 38
 URL      : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Source0  : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3.2
 Group    : Development/Tools
 License  : Python-2.0
 Requires: futures-python3
+Requires: futures-license
 Requires: futures-python
 BuildRequires : pbr
 BuildRequires : pip
-
+BuildRequires : python-core
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
 %description
 No detailed description available
+
+%package license
+Summary: license components for the futures package.
+Group: Default
+
+%description license
+license components for the futures package.
+
 
 %package python
 Summary: python components for the futures package.
@@ -47,7 +56,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523289052
+export SOURCE_DATE_EPOCH=1530373777
 python3 setup.py build -b py3
 
 %check
@@ -57,6 +66,8 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 python2 test_futures.py
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/futures
+cp LICENSE %{buildroot}/usr/share/doc/futures/LICENSE
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -64,6 +75,10 @@ echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/futures/LICENSE
 
 %files python
 %defattr(-,root,root,-)
