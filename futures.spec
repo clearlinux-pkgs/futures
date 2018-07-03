@@ -4,7 +4,7 @@
 #
 Name     : futures
 Version  : 3.1.1
-Release  : 38
+Release  : 39
 URL      : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Source0  : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3.2
