@@ -4,23 +4,29 @@
 #
 Name     : futures
 Version  : 3.1.1
-Release  : 41
+Release  : 42
 URL      : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Source0  : http://pypi.debian.net/futures/futures-3.1.1.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3.2
 Group    : Development/Tools
 License  : Python-2.0
-Requires: futures-python3
-Requires: futures-license
-Requires: futures-python
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python-core
-BuildRequires : python3-dev
-BuildRequires : setuptools
+Requires: futures-license = %{version}-%{release}
+Requires: futures-python = %{version}-%{release}
+Requires: futures-python3 = %{version}-%{release}
+BuildRequires : buildreq-distutils23
+BuildRequires : buildreq-distutils3
 
 %description
 No detailed description available
+
+%package legacypython
+Summary: legacypython components for the futures package.
+Group: Default
+Requires: python-core
+
+%description legacypython
+legacypython components for the futures package.
+
 
 %package license
 Summary: license components for the futures package.
@@ -33,7 +39,7 @@ license components for the futures package.
 %package python
 Summary: python components for the futures package.
 Group: Default
-Requires: futures-python3
+Requires: futures-python3 = %{version}-%{release}
 
 %description python
 python components for the futures package.
@@ -56,7 +62,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530373777
+export SOURCE_DATE_EPOCH=1540434638
+python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %check
@@ -65,10 +72,12 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 python2 test_futures.py
 %install
+export SOURCE_DATE_EPOCH=1540434638
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/futures
-cp LICENSE %{buildroot}/usr/share/doc/futures/LICENSE
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/futures
+cp LICENSE %{buildroot}/usr/share/package-licenses/futures/LICENSE
+python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -76,9 +85,13 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files license
+%files legacypython
 %defattr(-,root,root,-)
-/usr/share/doc/futures/LICENSE
+/usr/lib/python2*/*
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/futures/LICENSE
 
 %files python
 %defattr(-,root,root,-)
