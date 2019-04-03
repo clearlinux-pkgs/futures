@@ -4,7 +4,7 @@
 #
 Name     : futures
 Version  : 3.2.0
-Release  : 45
+Release  : 46
 URL      : https://files.pythonhosted.org/packages/1f/9e/7b2ff7e965fc654592269f2906ade1c7d705f1bf25b7d469fa153f7d19eb/futures-3.2.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/1f/9e/7b2ff7e965fc654592269f2906ade1c7d705f1bf25b7d469fa153f7d19eb/futures-3.2.0.tar.gz
 Summary  : Backport of the concurrent.futures package from Python 3
@@ -13,22 +13,13 @@ License  : Python-2.0
 Requires: futures-license = %{version}-%{release}
 Requires: futures-python = %{version}-%{release}
 Requires: futures-python3 = %{version}-%{release}
-BuildRequires : buildreq-distutils23
 BuildRequires : buildreq-distutils3
+BuildRequires : python-core
 
 %description
 .. image:: https://travis-ci.org/agronholm/pythonfutures.svg?branch=master
 :target: https://travis-ci.org/agronholm/pythonfutures
 :alt: Build Status
-
-%package legacypython
-Summary: legacypython components for the futures package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the futures package.
-
 
 %package license
 Summary: license components for the futures package.
@@ -64,9 +55,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542242769
-python2 setup.py build -b py2
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1554320090
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -74,22 +65,17 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 python2 test_futures.py
 %install
-export SOURCE_DATE_EPOCH=1542242769
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/futures
 cp LICENSE %{buildroot}/usr/share/package-licenses/futures/LICENSE
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
-
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
 
 %files license
 %defattr(0644,root,root,0755)
